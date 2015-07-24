@@ -7,6 +7,8 @@ $(call inherit-product, device/common/gps/gps_us_supl.mk)
 #$(call inherit-product, device/qcom/common/common.mk)
 ##test
 
+$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
+
 $(call inherit-product-if-exists, vendor/PHICOMM/msm8610/msm8610-vendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/PHICOMM/msm8610/overlay
@@ -21,9 +23,13 @@ endif
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
-    $(LOCAL_PATH)/dt.img:dt.img
+    $(LOCAL_PATH)/dt.img:dt.img 
 #\
-#    $(LOCAL_PATH)/recovery/recovery.fstab:root/recovery.fstab
+#    $(LOCAL_PATH)/recovery/root/recovery.fstab:recovery/root/etc/recovery.fstab
+
+# TWRP
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/recovery/root/etc/twrp.fstab:recovery/root/etc/twrp.fstab
 
 $(call inherit-product, build/target/product/full.mk)
 
@@ -33,3 +39,4 @@ PRODUCT_DEVICE := msm8610
 
 #fstab.qcom & init.qcom.spec.switch.rc
 PRODUCT_PACKAGES += fstab.qcom
+

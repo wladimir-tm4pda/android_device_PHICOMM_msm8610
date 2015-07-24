@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2015 wladimir_tm (wladimir.tm4xda@gmail.com)
-#		for The CyanogenMod Project
+# 				for The CyanogenMod Project
 #
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -54,12 +54,7 @@ USE_CAMERA_STUB := true
 #LOCAL_PATH := $(call my-dir)
 LOCAL_PATH := device/PHICOMM/msm8610
 
-$(shell echo $$LOCAL_PATH)
-
 ######
-#TARGET_SPECIFIC_HEADER_PATH += $(LOCAL_PATH)/include
-TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
-#TARGET_SPECIFIC_HEADER_PATH += device/zte/kis3/include
 
 # Platform
 #BOARD_VENDOR := PHICOMM
@@ -80,6 +75,10 @@ TARGET_NO_RPC := true
 #CAF:
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
+
+#TARGET_SPECIFIC_HEADER_PATH += $(LOCAL_PATH)/include
+#TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
+#TARGET_SPECIFIC_HEADER_PATH += device/zte/kis3/include
 
 # CPU
 TARGET_ARCH := arm
@@ -153,7 +152,7 @@ BOARD_MKBOOTIMG_ARGS := --dt $(LOCAL_PATH)/dt.img
 #src:/sultanqasim/android_device_motorola_otus
 
 # Bionic
-#TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
+TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
 #TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
 
 # Partitions
@@ -171,7 +170,7 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE := ext4
+#BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE := ext4
 
 ###EXAMPLE
 ## PARTITION LAYOUT/INFO ##
@@ -188,13 +187,14 @@ BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE := ext4
 # Qualcomm Hardware
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
-COMMON_GLOBAL_CFLAGS += -DQCOM_BSP
 COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
 TARGET_USES_QCOM_BSP := true
+COMMON_GLOBAL_CFLAGS += -DQCOM_BSP
 
 # Graphics
 #TARGET_QCOM_DISPLAY_VARIANT := caf-new
-#BOARD_EGL_CFG := $(LOCAL_PATH)/egl.cfg
+#TARGET_QCOM_DISPLAY_VARIANT := caf
+BOARD_EGL_CFG := $(LOCAL_PATH)/egl.cfg
 #USE_OPENGL_RENDERER := true
 #TARGET_USES_ION := true
 #NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
@@ -304,66 +304,126 @@ MAX_EGL_CACHE_SIZE := 2048*1024
 #TARGET_FORCE_CPU_UPLOAD := true
 
 # Recovery
-#DEVICE_RESOLUTION := 480x800
+DEVICE_RESOLUTION := 480x800
 #DEVICE_RESOLUTION := 720x1280
-TARGET_RECOVERY_LCD_BACKLIGHT_PATH := \"/sys/class/leds/lcd-backlight/brightness\"
+#TARGET_RECOVERY_LCD_BACKLIGHT_PATH := \"/sys/class/leds/lcd-backlight/brightness\"
 BOARD_HAS_NO_SELECT_BUTTON := true
-TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
-#RECOVERY_GRAPHICS_USE_LINELENGTH := true
+#cm:
+#TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+#TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
+#TARGET_RECOVERY_PIXEL_FORMAT := RGBA_8888
 #TARGET_RECOVERY_PIXEL_FORMAT := RGB_565
 #TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
-#TARGET_RECOVERY_PIXEL_FORMAT := RGBA_8888
-#TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
+#twrp:
+#TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+#TARGET_RECOVERY_PIXEL_FORMAT := "RGB_565"
+#TWRP_EVENT_LOGGING := true
+
+#ADDITIONALLY
+
+#twrp_bootable_miniui_android.mk_file_from:
+#!!!!!!!!!!!!!!!!!!
+#TARGET_CUSTOM_KERNEL_HEADERS += $(LOCAL_PATH)/minui/include 
+# = path to files msm_ion.h and msm_mdp.h
+#
+TW_BRIGHTNESS_PATH := '/sys/class/leds/lcd-backlight/brightness'
+# 
+#BOARD_CUSTOM_GRAPHICS
+# = path to file graphics.c 
+#TW_BOARD_CUSTOM_GRAPHICS
+# = the same - but twrp_bootable_miniuitwrp_android.mk_file_from
+
+#
+#TW_MAX_BRIGHTNESS := 150
+#
+
+#
+TW_TARGET_USES_QCOM_BSP := true
+#
+
+#TW_DISABLE_DOUBLE_BUFFERING := true
+
 #TARGET_RECOVERY_FSTAB := device/PHICOMM/msm8610/ramdisk/fstab.qcom
 #RECOVERY_FSTAB_VERSION := 2
 
-RECOVERY_NAME := CWM for PHICOMM C230w
+#RECOVERY_NAME := TWRP for PHICOMM C230w
 
-TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/recovery/root/etc/recovery.fstab
+#TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/recovery/root/recovery.fstab
 #TARGET_PROVIDES_RECOVERY_INIT_RC := true
 #TARGET_RECOVERY_INITRC := $(LOCAL_PATH)/recovery/init.rc
 #Assert
 #TARGET_OTA_ASSERT_DEVICE := C230w
 #TARGET_OTA_ASSERT_DEVICE := f310lr,f310l,f310s,f310k
 
-#files from cm-11.0:
-#BOARD_CUSTOM_GRAPHICS += $(LOCAL_PATH)/miniui/recovery/graphics.c $(LOCAL_PATH)/miniui/recovery/graphics_overlay.c
-#BOARD_CUSTOM_GRAPHICS := $(LOCAL_PATH)/miniui/recovery/graphics.c $(LOCAL_PATH)/miniui/recovery/graphics_overlay.c
-#BOARD_CUSTOM_GRAPHICS += $(LOCAL_PATH)/miniui/recovery/graphics_overlay.c
-#BOARD_CUSTOM_GRAPHICS := ../../../device/PHICOMM/C230w/recovery/graphics.c ../../../device/PHICOMM/C230w/recovery/graphics_overlay.c
-BOARD_CUSTOM_GRAPHICS := ../../../$(LOCAL_PATH)/recovery/graphics.c ../../../$(LOCAL_PATH)/recovery/graphics_overlay.c
-
 #Philz edits
 #TARGET_SCREEN_HEIGHT := 800
 #TARGET_SCREEN_WIDTH := 480
 
 #TWRP_EXAMPLE
+#RECOVERY_VARIANT := twrp
 #DEVICE_RESOLUTION := 720x1280
-#BOARD_HAS_NO_REAL_SDCARD := true
 #TARGET_USERIMAGES_USE_EXT4 := true
 #TW_INTERNAL_STORAGE_PATH := "/data/media"
 #TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
-#TW_EXTERNAL_STORAGE_PATH := "/external_sd"
-#TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
-#TW_NO_USB_STORAGE := true
-#RECOVERY_GRAPHICS_USE_LINELENGTH := true
+TW_INTERNAL_STORAGE_PATH := "/internal_sd"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "internal_sd"
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+TW_DEFAULT_EXTERNAL_STORAGE := true
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
 #TW_IGNORE_MAJOR_AXIS_0 := true
-#TW_DEFAULT_EXTERNAL_STORAGE := true
 #TW_SCREEN_BLANK_ON_BOOT := true
 #TW_NO_SCREEN_TIMEOUT := true
 #RECOVERY_SDCARD_ON_DATA := true
 #BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 #BOARD_RECOVERY_SWIPE := true
-#BOARD_SUPPRESS_EMMC_WIPE := true
+BOARD_SUPPRESS_EMMC_WIPE := true
 #TARGET_RECOVERY_QCOM_RTC_FIX := true
 #BOARD_HAS_JANKY_BACKBUFFER := true
+TARGET_RECOVERY_DEVICE_MODULES += twrp.fstab
+
+#TW_NO_USB_STORAGE := true
+
+BOARD_HAS_NO_REAL_SDCARD := true
+# This excludes parted from the build... parted is prebuilt and for arm CPU only
+
+#TW_USE_TOOLBOX := true
+
+TW_EXCLUDE_MTP := true
+#MTP not woking in omni 4.4
+
+#TW_EXCLUDE_SUPERSU := true
+
+#TW_HAS_DOWNLOAD_MODE := true
+# - not use via reboots into system
+
+#(TW_DISABLE_DOUBLE_BUFFERING), true)
+
+#TW_NEVER_UNMOUNT_SYSTEM := true
+# -- not USE - via can not format system
+ 
+
+#TW_FORCE_CPUINFO_FOR_DEVICE_ID), true
+TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
+TW_EXCLUDE_ENCRYPTED_BACKUPS := true
+# for smaller size
+
+TW_NO_EXFAT : = true
+#for smaller size
+
+#TW_SCREEN_BLANK_ON_BOOT := true
+
+TW_DISABLE_TTF := true
+## This excludes file 324.0KiB [######    ]  libft2.so
 
 #####
 # Make sure this folder exists so display stuff doesn't fail
-$(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
+#$(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
 #####
+#$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
 
-#HAVE_SELINUX := true
+HAVE_SELINUX := true
 
 # SELinux policies
 # qcom sepolicy
