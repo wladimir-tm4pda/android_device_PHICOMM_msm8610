@@ -9,11 +9,5 @@ android_device_PHICOMM_msm8610 <br>
 <br> 
 <br>#==================
 <br><b>how to build recovery example:</b>
-<br>https://github.com/wladimir-tm4pda/android_device_PHICOMM_msm8610/wiki/How-to-build-recovery-example:
+<br>https://github.com/wladimir-tm4pda/android_device_PHICOMM_msm8610/wiki/How-to-build-recovery-example
 <br>#==================
-<br>
-<br>additional info:
-<br>@xdadevelopers Post: [ROM] CWM11 recovery and Philz Touch port for Phicomm c230w (working)
-<br>http://forum.xda-developers.com/android/general/rom-cwm11-recovery-port-phicomm-c230w-t2871370
-<br>
-
