@@ -1,5 +1,6 @@
 android_device_PHICOMM_msm8610 <br>
-for compiling CWM 6.0.5.1 on sources of cm-11.0 <br>
+cm-11.0 working version of device tree for CWM 6.0.5.1
+<br>
 <br>version by wladimir_tm
 <br>
 <br>main differs from crazytiti version:
