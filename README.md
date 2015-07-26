@@ -16,6 +16,4 @@ android_device_PHICOMM_msm8610 <br>
 <br>@xdadevelopers Post: [ROM] CWM11 recovery and Philz Touch port for Phicomm c230w (working)
 <br>http://forum.xda-developers.com/android/general/rom-cwm11-recovery-port-phicomm-c230w-t2871370
 <br>
-<br>@xdadevelopers Post: [DEV]How to compile TWRP touch recovery
-<br>http://forum.xda-developers.com/showthread.php?t=1943625
-<br>
+
