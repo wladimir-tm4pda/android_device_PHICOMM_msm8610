@@ -35,7 +35,9 @@ android_device_PHICOMM_msm8610 <br>
 <br>#clone device tree
 <br>mkdir -p /device/PHICOMM/msm8610
 <br>cd /device/PHICOMM/msm8610
-<br>git clone https://github.com/wladimir-tm4pda/android_device_PHICOMM_msm8610.git
+<br>git init .
+<br>git remote add origin https://github.com/wladimir-tm4pda/android_device_PHICOMM_msm8610.git
+<br>git git fetch origin
 <br>git checkout {desired-branch} #in this exmpl: cm-11.0
 <br>git checkout cm-11.0
 <br>ls -la #ckeck
