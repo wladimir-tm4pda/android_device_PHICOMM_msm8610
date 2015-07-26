@@ -1,6 +1,5 @@
-android_device_PHICOMM_msm8610 <br>
-created on sources of cm-11.0 <br>
-with standart tool:<br>
-<b>./build/tools/device/mkvendor.sh PHICOMM msm8610 ~/Desktop/boot.img</b>
-<br>
-<br>boot.img - is file from stock T30<br>
+android_device_PHICOMM_msm861<br>
+Credits to crazytiti @xdadevelopers<br>
+Post: [ROM] CWM11 recovery and Philz Touch port for Phicomm c230w (working)<br>
+http://forum.xda-developers.com/android/general/rom-cwm11-recovery-port-phicomm-c230w-t2871370
+>>>>>>> crazytiti_xda_reco-cm
