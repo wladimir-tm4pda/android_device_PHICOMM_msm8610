@@ -10,5 +10,5 @@ android_device_PHICOMM_msm8610<br>
 <br> 
 <br>#==================
 <br><b>how to build recovery example:</b>
-<br>https://github.com/wladimir-tm4pda/android_device_PHICOMM_msm8610/wiki/How-to-build-recovery-example
+<br>https://github.com/wladimir-tm4pda/android_device_PHICOMM_msm8610/wiki/How-to-build-recovery-(example)
 <br>#==================
