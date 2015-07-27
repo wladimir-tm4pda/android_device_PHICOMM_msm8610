@@ -1,6 +1,6 @@
 <br>**/device/qcom/msm8610**
 <br>reffers to: **platform_vendor_qcom_msm8610**
-<br>https://www.codeaurora.org/xwiki/bin/QAEP/platform_vendor_qcom_msm8610
+<br>https://www.codeaurora.org/cgit/quic/la/platform/vendor/qcom/msm8610/
 <br>========
 <br> extracted & resynced Mon Jul 27 19:54:21 EEST 2015 
 <br>========
