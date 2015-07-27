@@ -7,7 +7,9 @@
 <br>7z x msm8610ca4.3.mx0.dot.repo.7z
 <br>repo init -u git://codeaurora.org/platform/manifest.git -b release -m LNX.LA.3.2.1.3-12000-8x10.0.xml --repo-url=git://codeaurora.org/tools/repo.git --repo-branch=caf-stable
 <br>date && date >> sync.log && /usr/bin/time -f "Total time: %E" repo sync -j8 2>&1 | tee -a sync.log && date && date >> sync.log
-<br>
+<br>...
+<br>Total time: 7:30.89
+<br>Mon Jul 27 19:56:31 EEST 2015
 <br>=========
 <br> .repo archive created upon:
 <br>repo init -u git://codeaurora.org/platform/manifest.git -b release -m LNX.LA.3.2.1.3-12000-8x10.0.xml --repo-url=git://codeaurora.org/tools/repo.git --repo-branch=caf-stable
