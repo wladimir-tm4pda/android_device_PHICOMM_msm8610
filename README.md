@@ -1,14 +1,17 @@
-android_device_PHICOMM_msm8610<br>
-<br>device tree created for PHICOMM C230w msm8610 android phone<br>
-<br>designed for custom recoveries only for now (CWM/TWRP)
 <br>
-<br>cm-* branches for CWM (on CyanogenMod sources)
-<br>android-* branches for TWRP (on omni sources)
-<br>checkout appropriate branch for look into<br>
 <br>
-<br>PREBUILDED 'kernel' & 'dt.img'- used from stock ROM T30
-<br> 
-<br>#==================
-<br><b>how to build recovery example:</b>
-<br>https://github.com/wladimir-tm4pda/android_device_PHICOMM_msm8610/wiki/How-to-build-recovery-(example)
-<br>#==================
+<br>========
+<br> extracted & resynced Mon Jul 27 19:54:21 EEST 2015 
+<br>========
+<br>-rw------- 1 wladimir_tm wladimir_tm 42625069732 Jun  2 16:49 msm8610ca4.3.mx0.dot.repo.7z
+<br>7z x msm8610ca4.3.mx0.dot.repo.7z
+<br>repo init -u git://codeaurora.org/platform/manifest.git -b release -m LNX.LA.3.2.1.3-12000-8x10.0.xml --repo-url=git://codeaurora.org/tools/repo.git --repo-branch=caf-stable
+<br>date && date >> sync.log && /usr/bin/time -f "Total time: %E" repo sync -j8 2>&1 | tee -a sync.log && date && date >> sync.log
+<br>
+<br>=========
+<br> .repo archive created upon:
+<br>repo init -u git://codeaurora.org/platform/manifest.git -b release -m LNX.LA.3.2.1.3-12000-8x10.0.xml --repo-url=git://codeaurora.org/tools/repo.git --repo-branch=caf-stable
+<br>date && date >> sync.log && /usr/bin/time -f Total time: %E repo sync -j8 | tee -a sync.log 2>&1 >> sync.log && date >> sync.log
+<br>RX bytes:43155299434 (43.1 GB)  TX bytes:1266793784 (1.2 GB)
+<br>du -sh 50G.
+<br>sync made: Tue Jun  2 09:28:54 EEST 2015
