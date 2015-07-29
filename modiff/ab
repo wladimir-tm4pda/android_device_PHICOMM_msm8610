@@ -29,5 +29,5 @@ acp: file 'out/target/product/msm8610/obj/external/compat-wireless/cfg80211.ko' 
 make: *** [out/target/product/msm8610/obj/DLKM/cfg80211.ko_intermediates/cfg80211.ko] Error 1
 make: *** Waiting for unfinished jobs...
 
---- simple!!! -ik !!!
+--- simple!!!  forced compile with options -ik !!!
 -----
