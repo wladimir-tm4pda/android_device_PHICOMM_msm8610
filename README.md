@@ -26,7 +26,7 @@ some files - extracted from stock ROM T30
 
 ===========
 
-try modify /vendor/qcom/build/tasks$ generate_extra_images.mk
+even try modify /vendor/qcom/build/tasks$ generate_extra_images.mk ))
 
 comments in mk files by wladimir_tm - strings with 5#
 
@@ -53,3 +53,16 @@ but still mount sdcard troubles - even on stock ROM T30
 \+ dir 'modiff' -with comments in 'ab' file
 
 =================
+
+summary for 20150729:
+
+system - not run ((reboots into recovery)
+
+boot - runs with stock ROM T30 -- but have no external SD
+
+recovery - have no 'britness path' (/sys/backlight/...") in /sbit/recovery (binary)
+
+so "dark screen" :(
+
+
+
