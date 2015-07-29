@@ -24,15 +24,16 @@
 
 some files - extracted from stock ROM T30
 
--- comments by wladimir_tm 
-
 ===========
 
 try modify /vendor/qcom/build/tasks$ generate_extra_images.mk
 
 comments in mk files by wladimir_tm - strings with 5#
 
-===============example run:
+===============
+
+example run build:
+
 source build/envsetup.sh
 
 lunch msm8610-eng
@@ -41,10 +42,14 @@ RUN=\`date +%m%d%H%M%S\` && date && date >> make.$RUN.log && /usr/bin/time -f "T
 
 =========
 
-changed to stock T30 version (as module)
-init.qcom.rc
-mount sdcard troubles))
-there is the same!!! /device/qcom/common/rootdir/etc$ init.qcom.rc
+changed to stock T30 version (as module) - not succesfull; so try simple replase file 
+
+/device/qcom/common/rootdir/etc$ *init.qcom.rc*
+
+but still mount sdcard troubles - even on stock ROM T30 
+
+===============
+
 \+ dir 'modiff' -with comments in 'ab' file
 
 =================
