@@ -18,12 +18,9 @@
 <br>RX bytes:43155299434 (43.1 GB)  TX bytes:1266793784 (1.2 GB)
 <br>du -sh 50G.
 <br>sync made: Tue Jun  2 09:28:54 EEST 2015
->>>>>>> 9190cb301868ca093d97e3b6b56cc1dc019aae86
-<<<<<<< HEAD
-README.md
 
-**device tree for PHICOMM C230w**
-based on CAF: https://www.codeaurora.org/cgit/quic/la/platform/vendor/qcom/msm8610/
+
+============
 
 some files - extracted from stock ROM T30
 
@@ -42,14 +39,16 @@ modified /vendor/qcom/build/tasks$ generate_extra_images.mk
 
 ------------example run:
 source build/envsetup.sh
+
 lunch msm8610-eng
+
 RUN=`date +%m%d%H%M%S` && date && date >> make.$RUN.log && /usr/bin/time -f "Total time: %E" make recoveryimage -j4 2>&1 | tee -a make.$RUN.log && date >> make.$RUN.log && date
+
 -----
 
 -----
 changed to stock T30 version (as module)
 init.qcom.rc
-//moun sdcard troubles))
-// there is the same!!! /device/qcom/common/rootdir/etc$ init.qcom.rc
------
-=======
+mount sdcard troubles))
+there is the same!!! /device/qcom/common/rootdir/etc$ init.qcom.rc
+
