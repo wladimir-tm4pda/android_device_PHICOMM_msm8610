@@ -19,8 +19,7 @@ endif
 # Compile Linux Kernel
 #----------------------------------------------------------------------
 ifeq ($(KERNEL_DEFCONFIG),)
-#    KERNEL_DEFCONFIG := msm8610-perf_defconfig
-    KERNEL_DEFCONFIG := C230W_defconfig
+    KERNEL_DEFCONFIG := msm8610_defconfig
 endif
 
 include kernel/AndroidKernel.mk
@@ -28,28 +27,9 @@ include kernel/AndroidKernel.mk
 $(INSTALLED_KERNEL_TARGET): $(TARGET_PREBUILT_KERNEL) | $(ACP)
 	$(transform-prebuilt-to-target)
 
-##### to make with dtb the same
-#$(INSTALLED_DTIMAGE_TARGET): $(TARGET_PREBUILT_DT) | $(ACP)
-#	$(transform-prebuilt-to-target)
-##### not works ((
-
- 
 #----------------------------------------------------------------------
 # Copy additional target-specific files
 #----------------------------------------------------------------------
-
-#####added
-#include $(CLEAR_VARS)
-#LOCAL_MODULE       := init.qcom.rc
-#LOCAL_MODULE_TAGS  := optional eng
-#LOCAL_MODULE_CLASS := ETC
-#LOCAL_SRC_FILES    := $(LOCAL_MODULE)
-#LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
-#include $(BUILD_PREBUILT)
-#####added
-##### but not - via 'double def' -- so commented
-#####and simple replace file in /device/qcom/common/rootdir/etc
-
 include $(CLEAR_VARS)
 LOCAL_MODULE       := vold.fstab
 LOCAL_MODULE_TAGS  := optional eng
@@ -59,14 +39,6 @@ include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE       := init.target.rc
-LOCAL_MODULE_TAGS  := optional eng
-LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := $(LOCAL_MODULE)
-LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE       := init.qcom.spec.switch.rc
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := $(LOCAL_MODULE)
@@ -132,7 +104,15 @@ endif
 
 ifeq ($(strip $(BOARD_HAS_QCOM_WLAN)),true)
 include $(CLEAR_VARS)
-LOCAL_MODULE       := wpa_supplicant_wcn.conf
+LOCAL_MODULE       := wpa_supplicant_overlay.conf
+LOCAL_MODULE_TAGS  := optional
+LOCAL_MODULE_CLASS := ETC
+LOCAL_SRC_FILES    := $(LOCAL_MODULE)
+LOCAL_MODULE_PATH  := $(TARGET_OUT_ETC)/wifi
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE       := p2p_supplicant_overlay.conf
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := $(LOCAL_MODULE)
@@ -163,14 +143,13 @@ LOCAL_MODULE_PATH  := $(TARGET_OUT_ETC)/hostapd
 LOCAL_SRC_FILES    := hostapd.deny
 include $(BUILD_PREBUILT)
 
-#disabled acc to T10 stock ROM
-#include $(CLEAR_VARS)
-#LOCAL_MODULE       := enable_swap.sh
-#LOCAL_MODULE_TAGS  := optional
-#LOCAL_MODULE_CLASS := ETC
-#LOCAL_SRC_FILES    := $(LOCAL_MODULE)
-#LOCAL_MODULE_PATH  := $(TARGET_OUT_ETC)
-#include $(BUILD_PREBUILT)
+include $(CLEAR_VARS)
+LOCAL_MODULE       := enable_swap.sh
+LOCAL_MODULE_TAGS  := optional
+LOCAL_MODULE_CLASS := ETC
+LOCAL_SRC_FILES    := $(LOCAL_MODULE)
+LOCAL_MODULE_PATH  := $(TARGET_OUT_ETC)
+include $(BUILD_PREBUILT)
 
 #Create symbolic links
 $(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wlan/prima; \
