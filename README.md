@@ -9,6 +9,6 @@ android_device_PHICOMM_msm8610<br>
 <br>PREBUILDED 'kernel' & 'dt.img'- used from stock ROM T30
 <br> 
 <br>#==================
-<br><b>how to build recovery example:</b>
-<br>https://github.com/wladimir-tm4pda/android_device_PHICOMM_msm8610/wiki/How-to-build-recovery-(example)
+<br><b>Additional info:</b>
+<br>https://github.com/wladimir-tm4pda/android_device_PHICOMM_msm8610/wiki
 <br>#==================
