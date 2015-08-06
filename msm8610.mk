@@ -15,17 +15,20 @@ DEVICE_PACKAGE_OVERLAYS += device/PHICOMM/msm8610/overlay
 
 LOCAL_PATH := device/PHICOMM/msm8610
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
-else
-	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
+#ifeq ($(TARGET_PREBUILT_KERNEL),)
+#	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
+#else
+#	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+#endif
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel \
-    $(LOCAL_PATH)/dt.img:dt.img 
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_KERNEL):kernel \
+#    $(LOCAL_PATH)/dt.img:dt.img 
 #\
 #    $(LOCAL_PATH)/recovery/root/recovery.fstab:recovery/root/etc/recovery.fstab
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/dt.img:dt.img 
 
 # TWRP
 #PRODUCT_COPY_FILES += \
@@ -39,4 +42,3 @@ PRODUCT_DEVICE := msm8610
 
 #fstab.qcom & init.qcom.spec.switch.rc
 PRODUCT_PACKAGES += fstab.qcom
-
