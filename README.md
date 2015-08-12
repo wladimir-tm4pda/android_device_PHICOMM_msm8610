@@ -7,4 +7,7 @@ cm-11.0 working version of device tree for CWM 6.0.5.1
 <br>    using FLAGS:
 <br>    LOCAL_PATH := device/PHICOMM/msm8610
 <br>    TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include<br>
-<br>
+<br>-------20150812
+<br> ready for compiling CWM with kernel sources (device/PHICOMM/msm8610-kernel)
+<br> and additional mkbootimg.mk - for generating dt.img
+

@@ -40,7 +40,7 @@
 # This variable is set first, so it can be overridden
 # by BoardConfigVendor.mk
 USE_CAMERA_STUB := true
-#BOARD_USES_GENERIC_AUDIO := true
+BOARD_USES_GENERIC_AUDIO := true
 #BOARD_USES_GENERIC_AUDIO := false
 
 # inherit from the proprietary version
@@ -56,6 +56,12 @@ USE_CAMERA_STUB := true
 LOCAL_PATH := device/PHICOMM/msm8610
 
 ######
+
+######
+#TARGET_SPECIFIC_HEADER_PATH += $(LOCAL_PATH)/include
+
+#working:
+#TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 # Platform
 #BOARD_VENDOR := PHICOMM
@@ -77,10 +83,6 @@ TARGET_NO_RPC := true
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 
-#TARGET_SPECIFIC_HEADER_PATH += $(LOCAL_PATH)/include
-TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
-#TARGET_SPECIFIC_HEADER_PATH += device/zte/kis3/include
-
 # CPU
 TARGET_ARCH := arm
 TARGET_CPU_ABI := armeabi-v7a
@@ -92,7 +94,7 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_SMP := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
 # Dalvik
-#TARGET_ARCH_LOWMEM := true
+TARGET_ARCH_LOWMEM := true
 
 #crazytiti
 #TARGET_CPU_VARIANT := cortex-a7
@@ -100,11 +102,13 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 
 
 # Kernel
-TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/kernel
-#TARGET_PREBUILT_RECOVERY_KERNEL := 
-#TARGET_KERNEL_SOURCE := kernel/zte/msm8610
-#TARGET_KERNEL_CONFIG := msm8610-zte_defconfig
-#KERNEL_SRC_DIR := 
+#TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuitls/kernel
+#TARGET_PREBUILT_RECOVERY_KERNEL :=
+TARGET_KERNEL_SOURCE := device/PHICOMM/msm8610-kernel
+TARGET_KERNEL_CONFIG := C230W_defconfig
+#TARGET_KERNEL_CONFIG := msm8610-perf_defconfig
+#TARGET_KERNEL_CONFIG := msm8610_defconfig
+#KERNEL_SRC_DIR :=
 
 
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37
@@ -131,7 +135,10 @@ BOARD_KERNEL_SEPARATED_DT := true
 #BOARD_MKBOOTIMG_ARGS += --dt $(LOCAL_PATH)/dt.img
 ##BOARD_MKBOOTIMG_ARGS += --kernel_offset "$(BOARD_KERNEL_OFFSET)"
 
-BOARD_MKBOOTIMG_ARGS := --dt $(LOCAL_PATH)/dt.img
+#BOARD_MKBOOTIMG_ARGS := --dt $(LOCAL_PATH)/dt.img
+
+###
+BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
 
 #crazytiti
 #BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --dt device/PHICOMM/msm8610/dt.img
@@ -194,14 +201,16 @@ TARGET_USES_QCOM_BSP := true
 
 # Graphics
 #TARGET_QCOM_DISPLAY_VARIANT := caf-new
-#BOARD_EGL_CFG := $(LOCAL_PATH)/egl.cfg
-#USE_OPENGL_RENDERER := true
-#TARGET_USES_ION := true
-#NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
+TARGET_QCOM_DISPLAY_VARIANT := caf
+BOARD_EGL_CFG := $(LOCAL_PATH)/egl.cfg
+USE_OPENGL_RENDERER := true
+TARGET_USES_ION := true
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 #TARGET_DISPLAY_USE_RETIRE_FENCE := true
 
 # Enables Adreno RS driver
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
+
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
 # Increase the size if shaders of size greater than 12KB are used.
@@ -247,11 +256,12 @@ MAX_EGL_CACHE_SIZE := 2048*1024
 
 # Bluetooth
 #BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/zte/kis3/bluetooth
+BOARD_HAVE_BLUETOOTH := false
 #BOARD_HAVE_BLUETOOTH := true
 #BOARD_HAVE_BLUETOOTH_QCOM := true
 
 # Power
-#TARGET_POWERHAL_VARIANT := qcom
+TARGET_POWERHAL_VARIANT := qcom
 # Enable suspend during charger mode
 #BOARD_CHARGER_ENABLE_SUSPEND := true
 #BOARD_CHARGER_DISABLE_INIT_BLANK := true #/bitdomo2/android_device_lge_gammaw
@@ -285,13 +295,17 @@ MAX_EGL_CACHE_SIZE := 2048*1024
 #WIFI_DRIVER_MODULE_NAME := "wlan"
 #BOARD_WLAN_DEVICE := qcwcn
 #TARGET_USES_WCNSS_CTRL := true
-
+#TARGET_PROVIDES_WCNSS_QMI := true
+#TARGET_USES_QCOM_WCNSS_QMI := true
+#WIFI_DRIVER_FW_PATH_AP := "ap"
+#WIFI_DRIVER_FW_PATH_STA := "sta"
 #
 #WLAN_MODULES:
 #	mkdir -p $(KERNEL_MODULES_OUT)/pronto
 #	mv $(KERNEL_MODULES_OUT)/wlan.ko $(KERNEL_MODULES_OUT)/pronto/pronto_wlan.ko
 #	ln -sf /system/lib/modules/pronto/pronto_wlan.ko $(TARGET_OUT)/lib/modules/wlan.ko
 #
+
 #
 #TARGET_KERNEL_MODULES += WLAN_MODULES
 #
@@ -319,7 +333,7 @@ TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 
 #uzerlinux ask:
 BOARD_RECOVERY_SWIPE := true
-#not sure if working))
+# working!!
 
 RECOVERY_NAME := CWM for PHICOMM C230w
 
@@ -356,7 +370,7 @@ RECOVERY_NAME := CWM for PHICOMM C230w
 
 #####
 # Make sure this folder exists so display stuff doesn't fail
-$(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
+#$(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
 #####
 
 #HAVE_SELINUX := true
@@ -387,3 +401,5 @@ $(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
 #ADDITIONAL_DEFAULT_PROPERTIES += persist.service.adb.enable=1
 #ADDITIONAL_DEFAULT_PROPERTIES += ro.config.sec_storage=1
 #ADDITIONAL_DEFAULT_PROPERTIES += persist.sys.usb.config=mass_storage,adb
+
+#BUILD_TINY_ANDROID := true
