@@ -47,8 +47,8 @@ PRODUCT_MANUFACTURER := PHICOMM
 #    LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 #endif
 #
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/dt.img:dt.img
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/dt.img:dt.img
 
 #PRODUCT_COPY_FILES += \
 #    $(LOCAL_KERNEL):kernel \
@@ -72,8 +72,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/snd_soc_msm/snd_soc_msm_8x10_wcd_skuaa:system/etc/snd_soc_msm/snd_soc_msm_8x10_wcd_skuaa
 
 # Bluetooth configuration files
-PRODUCT_COPY_FILES += \
-    system/bluetooth/data/main.le.conf:system/etc/bluetooth/main.conf
+#PRODUCT_COPY_FILES += \
+#    system/bluetooth/data/main.le.conf:system/etc/bluetooth/main.conf
 
 # splash img
 #####PRODUCT_COPY_FILES += \
@@ -113,8 +113,8 @@ LogSystem += cdrom_install.iso
 PRODUCT_PACKAGES += $(LogSystem)
 
 # Sensors feature definition file/s
-PRODUCT_COPY_FILES += \
-   frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml
+#PRODUCT_COPY_FILES += \
+#   frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml
 
 #PPPOE
 rp_pppoe := pppoe

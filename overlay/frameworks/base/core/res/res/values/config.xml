@@ -89,5 +89,5 @@
     </integer-array>
 
    <!-- Whether cpu boost is enabled for overscroller fling. -->
-   <bool name="config_enableCpuBoostForOverScrollerFling">true</bool>
+   <bool name="config_enableCpuBoostForOverScrollerFling">false</bool>
 </resources>

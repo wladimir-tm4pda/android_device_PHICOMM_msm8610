@@ -12,9 +12,12 @@
 
 
 #####
-# mark with 5 symbols "#" -- added
+# mark with 5 symbols "#" -- added in first edition
 #####
 LOCAL_PATH := device/PHICOMM/msm8610
+#####
+
+#####
 #TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 #KERNEL_HEADERS
 #TARGET_OUT_HEADERS
@@ -26,6 +29,10 @@ LOCAL_PATH := device/PHICOMM/msm8610
 #CUSTOM_KERNEL_HEADERS += $(LOCAL_PATH)/include
 #####
 #####!!!! used standart dir /kernel-headers!!!!!
+#!!!! this options needs only with prebuild_kernel!
+#so better to bild with kernel sources!
+
+
 
 ifeq ($(TARGET_ARCH),)
 TARGET_ARCH := arm
@@ -99,6 +106,8 @@ BOARD_KERNEL_SEPARATED_DT := true
 #####INSTALLED_DTIMAGE_TARGET := $(LOCAL_PATH)/dt.img
 #####BOARD_MKBOOTIMG_ARGS := --dt $(LOCAL_PATH)/dt.img
 #####
+#######decision: buils with kernel sources! - then dt.img is generated fine!
+
 
 #####BOARD_EGL_CFG := device/qcom/$(TARGET_BOARD_PLATFORM)/egl.cfg
 BOARD_EGL_CFG := $(LOCAL_PATH)/egl.cfg
@@ -125,7 +134,7 @@ BOARD_CHARGER_ENABLE_SUSPEND := true
 # Added to indicate that protobuf-c is supported in this build
 #####PROTOBUF_SUPPORTED := true
 
-TARGET_ADDITIONAL_BOOTCLASSPATH := qcom.fmradio:oem-services:qcmediaplayer
+#TARGET_ADDITIONAL_BOOTCLASSPATH := qcom.fmradio:oem-services:qcmediaplayer
 
 #####HAVE_FT_FW_UPGRADE := true
 
@@ -137,7 +146,7 @@ TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 ######
 ######
 ######added acc to T30 stock ROM
-BOARD_HAS_ATH_WLAN_AR6004 := true
+######BOARD_HAS_ATH_WLAN_AR6004 := true
 
 #####added acc to def cat AndroidBoard.mk
 ##### commented by default
@@ -147,6 +156,20 @@ BOARD_HAS_ATH_WLAN_AR6004 := true
 #BUILD_TINY_ANDROID := true
 
 #####ADDITIONALLY:
+
+#####scorpio92_manual:
+#####corrected overlays - to stock ROM T30 values:
+#####
+TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_storage/lun/file"
+#BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
+#PRODUCT_AAPT_CONFIG :=ldpi mdpi hdpi xhdpi
+#PRODUCT_AAPT_PREF_CONFIG := mdpi
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
+######################
+
+######################
+######################
+
 #DISABLE_DEXPREOPT := true
 #---OR---
 # Enable dex-preoptimization to speed up the first boot sequence
@@ -163,6 +186,7 @@ OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 # -- already defined in msm8610.mk
 # analog to CM sources FLAGs:
 #####
+
 # QCOM hardware
 #BOARD_USES_QCOM_HARDWARE := true
 #COMMON_GLOBAL_CFLAGS += -DQCOM_BSP
@@ -170,16 +194,155 @@ OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 #TARGET_USES_QCOM_BSP := true
 #####
 
-#USE_OPENGL_RENDERER := true
-#TARGET_USES_ION := true
-#NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
+USE_OPENGL_RENDERER := true
+TARGET_USES_ION := true
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 TARGET_RECOVERY_LCD_BACKLIGHT_PATH := '/sys/class/leds/lcd-backlight/brightness'
 #
 #BOARD_HAVE_BLUETOOTH_BLUEZ),true)
 
+######################
+######################
+# Camera
+#USE_DEVICE_SPECIFIC_CAMERA := true
+#TARGET_DISPLAY_INSECURE_MM_HEAP := true
+#BOARD_USES_LEGACY_MMAP := true
+# Global flags
+#COMMON_GLOBAL_CFLAGS += -DLG_CAMERA_HARDWARE
+
+# Media
+#TARGET_QCOM_MEDIA_VARIANT := caf-new
+#TARGET_QCOM_MEDIA_VARIANT := caf-legacy
+# QCOM enhanced A/V
+#TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
+
+# Audio
+#TARGET_QCOM_AUDIO_VARIANT := caf
+#BOARD_USES_ALSA_AUDIO := true
+#AUDIO_FEATURE_DISABLED_ANC_HEADSET := true
+#AUDIO_FEATURE_DISABLED_SSR := true
+#AUDIO_FEATURE_DISABLED_DS1_DOLBY_DDP := true
+#AUDIO_FEATURE_DISABLED_DS1_DOLBY_DAP := true
+#AUDIO_FEATURE_DISABLED_MULTI_VOICE_SESSIONS := true
+
+# Time services
+#BOARD_USES_QC_TIME_SERVICES := true
+
+# Bluetooth
+#BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/zte/kis3/bluetooth
+#BOARD_HAVE_BLUETOOTH := true
+#BOARD_HAVE_BLUETOOTH_QCOM := true
+
+# Power
+#TARGET_POWERHAL_VARIANT := qcom
+# Enable suspend during charger mode
+#BOARD_CHARGER_ENABLE_SUSPEND := true
+#BOARD_CHARGER_DISABLE_INIT_BLANK := true #/bitdomo2/android_device_lge_gammaw
+#TARGET_PROVIDES_POWERHAL := true
+#TARGET_USES_CPU_BOOST_HINT := true
+
+# Liblight
+#TARGET_PROVIDES_LIBLIGHT := true
+
+# Hardware tunables framework
+#BOARD_HARDWARE_CLASS := device/lge/msm8610-common/cmhw/
+# CMHW
+#BOARD_HARDWARE_CLASS := $(LOCAL_PATH)/cmhw/
+
+# Init
+#TARGET_UNIFIED_DEVICE := true
+#TARGET_INIT_VENDOR_LIB := libinit_msm
+
+# Build
+#TARGET_SYSTEMIMAGE_USE_SQUISHER := true
+
+# Wifi
+#BOARD_HAS_QCOM_WLAN := true
+#BOARD_HAS_QCOM_WLAN_SDK := true
+#WPA_SUPPLICANT_VERSION := VER_0_8_X
+#BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+#BOARD_HOSTAPD_DRIVER := NL80211
+#BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_qcwcn
+#BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_qcwcn
+#WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/wlan.ko"
+#WIFI_DRIVER_MODULE_NAME := "wlan"
+#BOARD_WLAN_DEVICE := qcwcn
+#TARGET_USES_WCNSS_CTRL := true
+
+#
+WLAN_MODULES:
+	mkdir -p $(KERNEL_MODULES_OUT)/pronto
+#	mv $(KERNEL_MODULES_OUT)/wlan.ko $(KERNEL_MODULES_OUT)/pronto/pronto_wlan.ko
+	cp $(KERNEL_MODULES_OUT)/wlan.ko $(KERNEL_MODULES_OUT)/pronto/pronto_wlan.ko
+	ln -sf /system/lib/modules/pronto/pronto_wlan.ko $(TARGET_OUT)/lib/modules/wlan.ko
+#
+#
+#TARGET_KERNEL_MODULES += WLAN_MODULES
+#
+
+# RIL
+#BOARD_RIL_CLASS := ../../../device/lge/msm8610-common/ril/
+
+# Enable WEBGL in WebKit
+#ENABLE_WEBGL := true
+#TARGET_FORCE_CPU_UPLOAD := true
+
+#...
+
+#HAVE_SELINUX := true
+
+# SELinux policies
+# qcom sepolicy
+#include device/qcom/sepolicy/sepolicy.mk
+#
+#BOARD_SEPOLICY_DIRS += \
+#    $(LOCAL_PATH)/sepolicy
+#
+#BOARD_SEPOLICY_UNION += \
+#    adbd.te \
+#    app.te \
+#...
+#
+#ifneq ($(TARGET_BUILD_VARIANT),user)
+#    BOARD_SEPOLICY_UNION += su.te
+#endif
+#
+######################
+######################
+
+######################
+######################
+
+#KonstaT:
+
+# Dalvik
+TARGET_ARCH_LOWMEM := true
+
+# FM
+#BOARD_HAVE_QCOM_FM := true
+
+# Classpath
+#PRODUCT_BOOT_JARS := $(subst $(space),:,$(PRODUCT_BOOT_JARS))
+
+#...
+
+# SELinux
+#BOARD_SEPOLICY_DIRS := \
+#    device/qcom/common/sepolicy
+
+#BOARD_SEPOLICY_UNION := \
+#    netd.te
+
+# Vendor init
+TARGET_INIT_VENDOR_LIB := libinit_msm
+#
+
+######################
+######################
+
 #####
 # Make sure this folder exists so display stuff doesn't fail
-$(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
+#$(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
 #####
 #####
 # default props
