@@ -13,15 +13,15 @@ DEVICE_PACKAGE_OVERLAYS += device/PHICOMM/msm8610/overlay
 
 LOCAL_PATH := device/PHICOMM/msm8610
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
-else
-	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
+#ifeq ($(TARGET_PREBUILT_KERNEL),)
+#	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
+#else
+#	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+#endif
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel \
-    $(LOCAL_PATH)/dt.img:dt.img
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_KERNEL):kernel \
+#    $(LOCAL_PATH)/dt.img:dt.img
 #\
 #    $(LOCAL_PATH)/recovery/recovery.fstab:root/recovery.fstab
 
@@ -31,5 +31,19 @@ PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_msm8610
 PRODUCT_DEVICE := msm8610
 
+PRODUCT_AAPT_CONFIG := normal hdpi
+PRODUCT_AAPT_PREF_CONFIG := hdpi
+
 #fstab.qcom & init.qcom.spec.switch.rc
 PRODUCT_PACKAGES += fstab.qcom
+
+#####
+# Symlinks
+#$(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wlan/prima; \
+#    rm $(TARGET_OUT_ETC)/firmware/wlan/prima/WCNSS_qcom_cfg.ini; \
+#    rm $(TARGET_OUT_ETC)/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin; \
+#    ln -sf /data/misc/wifi/WCNSS_qcom_cfg.ini \
+#    $(TARGET_OUT_ETC)/firmware/wlan/prima/WCNSS_qcom_cfg.ini; \
+#    ln -sf /persist/WCNSS_qcom_wlan_nv.bin \
+#    $(TARGET_OUT_ETC)/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin)
+#endif

@@ -40,7 +40,7 @@
 # This variable is set first, so it can be overridden
 # by BoardConfigVendor.mk
 USE_CAMERA_STUB := true
-#BOARD_USES_GENERIC_AUDIO := true
+BOARD_USES_GENERIC_AUDIO := true
 #BOARD_USES_GENERIC_AUDIO := false
 
 # inherit from the proprietary version
@@ -54,12 +54,13 @@ USE_CAMERA_STUB := true
 #LOCAL_PATH := $(call my-dir)
 LOCAL_PATH := device/PHICOMM/msm8610
 
-$(shell echo $$LOCAL_PATH)
+#$(shell echo $$LOCAL_PATH)
 
 ######
 #TARGET_SPECIFIC_HEADER_PATH += $(LOCAL_PATH)/include
-TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
-#TARGET_SPECIFIC_HEADER_PATH += device/zte/kis3/include
+
+#working:
+#TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 # Platform
 #BOARD_VENDOR := PHICOMM
@@ -100,10 +101,12 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 
 
 # Kernel
-TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/kernel
+TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuitls/kernel
 #TARGET_PREBUILT_RECOVERY_KERNEL := 
-#TARGET_KERNEL_SOURCE := kernel/zte/msm8610
-#TARGET_KERNEL_CONFIG := msm8610-zte_defconfig
+TARGET_KERNEL_SOURCE := device/PHICOMM/msm8610-kernel
+TARGET_KERNEL_CONFIG := C230W_defconfig
+#TARGET_KERNEL_CONFIG := msm8610-perf_defconfig
+#TARGET_KERNEL_CONFIG := msm8610_defconfig
 #KERNEL_SRC_DIR := 
 
 
@@ -131,7 +134,7 @@ BOARD_KERNEL_SEPARATED_DT := true
 #BOARD_MKBOOTIMG_ARGS += --dt $(LOCAL_PATH)/dt.img
 ##BOARD_MKBOOTIMG_ARGS += --kernel_offset "$(BOARD_KERNEL_OFFSET)"
 
-BOARD_MKBOOTIMG_ARGS := --dt $(LOCAL_PATH)/dt.img
+#BOARD_MKBOOTIMG_ARGS := --dt $(LOCAL_PATH)/prebuilts/dt.img
 
 #crazytiti
 #BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --dt device/PHICOMM/msm8610/dt.img
@@ -193,15 +196,16 @@ COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
 TARGET_USES_QCOM_BSP := true
 
 # Graphics
-#TARGET_QCOM_DISPLAY_VARIANT := caf-new
-#BOARD_EGL_CFG := $(LOCAL_PATH)/egl.cfg
-#USE_OPENGL_RENDERER := true
-#TARGET_USES_ION := true
-#NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
+TARGET_QCOM_DISPLAY_VARIANT := caf-new
+BOARD_EGL_CFG := $(LOCAL_PATH)/egl.cfg
+USE_OPENGL_RENDERER := true
+TARGET_USES_ION := true
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 #TARGET_DISPLAY_USE_RETIRE_FENCE := true
 
 # Enables Adreno RS driver
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
+
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
 # Increase the size if shaders of size greater than 12KB are used.
@@ -247,11 +251,12 @@ MAX_EGL_CACHE_SIZE := 2048*1024
 
 # Bluetooth
 #BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/zte/kis3/bluetooth
+BOARD_HAVE_BLUETOOTH := false
 #BOARD_HAVE_BLUETOOTH := true
 #BOARD_HAVE_BLUETOOTH_QCOM := true
 
 # Power
-#TARGET_POWERHAL_VARIANT := qcom
+TARGET_POWERHAL_VARIANT := qcom
 # Enable suspend during charger mode
 #BOARD_CHARGER_ENABLE_SUSPEND := true
 #BOARD_CHARGER_DISABLE_INIT_BLANK := true #/bitdomo2/android_device_lge_gammaw
@@ -268,30 +273,33 @@ MAX_EGL_CACHE_SIZE := 2048*1024
 
 # Init
 #TARGET_UNIFIED_DEVICE := true
-#TARGET_INIT_VENDOR_LIB := libinit_msm
+TARGET_INIT_VENDOR_LIB := libinit_msm
 
 # Build
 #TARGET_SYSTEMIMAGE_USE_SQUISHER := true
 
 # Wifi
-#BOARD_HAS_QCOM_WLAN := true
-#BOARD_HAS_QCOM_WLAN_SDK := true
-#WPA_SUPPLICANT_VERSION := VER_0_8_X
-#BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-#BOARD_HOSTAPD_DRIVER := NL80211
-#BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_qcwcn
-#BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_qcwcn
+BOARD_HAS_QCOM_WLAN := true
+BOARD_HAS_QCOM_WLAN_SDK := true
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_HOSTAPD_DRIVER := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_qcwcn
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_qcwcn
 #WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/wlan.ko"
 #WIFI_DRIVER_MODULE_NAME := "wlan"
-#BOARD_WLAN_DEVICE := qcwcn
-#TARGET_USES_WCNSS_CTRL := true
-
+BOARD_WLAN_DEVICE := qcwcn
+TARGET_USES_WCNSS_CTRL := true
+TARGET_PROVIDES_WCNSS_QMI := true
+TARGET_USES_QCOM_WCNSS_QMI := true
+WIFI_DRIVER_FW_PATH_AP := "ap"
+WIFI_DRIVER_FW_PATH_STA := "sta"
 #
 #WLAN_MODULES:
 #	mkdir -p $(KERNEL_MODULES_OUT)/pronto
 #	mv $(KERNEL_MODULES_OUT)/wlan.ko $(KERNEL_MODULES_OUT)/pronto/pronto_wlan.ko
 #	ln -sf /system/lib/modules/pronto/pronto_wlan.ko $(TARGET_OUT)/lib/modules/wlan.ko
-#
+
 #
 #TARGET_KERNEL_MODULES += WLAN_MODULES
 #
@@ -304,7 +312,7 @@ MAX_EGL_CACHE_SIZE := 2048*1024
 #TARGET_FORCE_CPU_UPLOAD := true
 
 # Recovery
-#DEVICE_RESOLUTION := 480x800
+DEVICE_RESOLUTION := 480x800
 #DEVICE_RESOLUTION := 720x1280
 TARGET_RECOVERY_LCD_BACKLIGHT_PATH := \"/sys/class/leds/lcd-backlight/brightness\"
 BOARD_HAS_NO_SELECT_BUTTON := true
@@ -334,8 +342,8 @@ TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/recovery/root/etc/recovery.fstab
 BOARD_CUSTOM_GRAPHICS := ../../../$(LOCAL_PATH)/recovery/graphics.c ../../../$(LOCAL_PATH)/recovery/graphics_overlay.c
 
 #Philz edits
-#TARGET_SCREEN_HEIGHT := 800
-#TARGET_SCREEN_WIDTH := 480
+TARGET_SCREEN_HEIGHT := 800
+TARGET_SCREEN_WIDTH := 480
 
 #TWRP_EXAMPLE
 #DEVICE_RESOLUTION := 720x1280
@@ -360,7 +368,7 @@ BOARD_CUSTOM_GRAPHICS := ../../../$(LOCAL_PATH)/recovery/graphics.c ../../../$(L
 
 #####
 # Make sure this folder exists so display stuff doesn't fail
-$(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
+#$(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
 #####
 
 #HAVE_SELINUX := true
@@ -391,3 +399,5 @@ $(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
 #ADDITIONAL_DEFAULT_PROPERTIES += persist.service.adb.enable=1
 #ADDITIONAL_DEFAULT_PROPERTIES += ro.config.sec_storage=1
 #ADDITIONAL_DEFAULT_PROPERTIES += persist.sys.usb.config=mass_storage,adb
+
+BUILD_TINY_ANDROID := true
