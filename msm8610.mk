@@ -37,6 +37,17 @@ PRODUCT_AAPT_PREF_CONFIG := hdpi
 #fstab.qcom & init.qcom.spec.switch.rc
 PRODUCT_PACKAGES += fstab.qcom
 
+# Ramdisk
+#root:
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH/root,root)
+
+# Prebuilt
+#system
+#PRODUCT_COPY_FILES += \
+#    $(call find-copy-subdir-files,*,device/zte/kis3/prebuilt/system,system)
+
+
 #####
 # Symlinks
 #$(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wlan/prima; \

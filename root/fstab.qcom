@@ -1,0 +1,43 @@
+# Android fstab file.
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+
+#TODO: Add 'check' as fs_mgr_flags with data partition.
+# Currently we dont have e2fsck compiled. So fs check would failed.
+
+#<src>                                                <mnt_point>  <type>  <mnt_flags and options>                     <fs_mgr_flags>
+/dev/block/platform/msm_sdcc.1/by-name/system         /system      ext4    ro,barrier=1                                wait
+/dev/block/platform/msm_sdcc.1/by-name/userdata       /data        ext4    nosuid,nodev,barrier=1,noauto_da_alloc      wait,check,encryptable=footer
+/dev/block/platform/msm_sdcc.1/by-name/cache     /cache       ext4    nosuid,nodev,barrier=1                  wait,check
+/dev/block/platform/msm_sdcc.1/by-name/boot      /boot        emmc    defaults                                defaults
+/dev/block/platform/msm_sdcc.1/by-name/recovery  /recovery    emmc    defaults                                defaults
+/devices/msm_sdcc.1/mmc_host                     /storage/sdcard0  vfat    nosuid,nodev                                wait,voldmanaged=internal_sdcard:21
+/devices/msm_sdcc.2/mmc_host                     /storage/sdcard1  vfat    nosuid,nodev                                wait,voldmanaged=external_sdcard:auto
+#/dev/block/mmcblk0p12         /system      ext4    ro,barrier=1                                wait
+#/dev/block/mmcblk0p22       /data        ext4    nosuid,nodev,barrier=1,noauto_da_alloc      wait,check,encryptable=footer
+##################
+#__bionic_open_tzdata: couldn't find any tzdata when looking for localtime!
+#__bionic_open_tzdata: couldn't find any tzdata when looking for GMT!
+#__bionic_open_tzdata: couldn't find any tzdata when looking for posixrules!
+#lrwxrwxrwx root     root              1970-01-07 18:27 DDR -> /dev/block/mmcblk0p4
+#lrwxrwxrwx root     root              1970-01-07 18:27 aboot -> /dev/block/mmcblk0p5
+#lrwxrwxrwx root     root              1970-01-07 18:27 boot -> /dev/block/mmcblk0p7
+#lrwxrwxrwx root     root              1970-01-07 18:27 cache -> /dev/block/mmcblk0p14
+#lrwxrwxrwx root     root              1970-01-07 18:27 fsc -> /dev/block/mmcblk0p18
+#lrwxrwxrwx root     root              1970-01-07 18:27 fsg -> /dev/block/mmcblk0p17
+#lrwxrwxrwx root     root              1970-01-07 18:27 misc -> /dev/block/mmcblk0p16
+#lrwxrwxrwx root     root              1970-01-07 18:27 modem -> /dev/block/mmcblk0p1
+#lrwxrwxrwx root     root              1970-01-07 18:27 modemst1 -> /dev/block/mmcblk0p10
+#lrwxrwxrwx root     root              1970-01-07 18:27 modemst2 -> /dev/block/mmcblk0p11
+#lrwxrwxrwx root     root              1970-01-07 18:27 pad -> /dev/block/mmcblk0p9
+#lrwxrwxrwx root     root              1970-01-07 18:27 persist -> /dev/block/mmcblk0p13
+#lrwxrwxrwx root     root              1970-01-07 18:27 recovery -> /dev/block/mmcblk0p15
+#lrwxrwxrwx root     root              1970-01-07 18:27 rpm -> /dev/block/mmcblk0p6
+#lrwxrwxrwx root     root              1970-01-07 18:27 sbl1 -> /dev/block/mmcblk0p2
+#lrwxrwxrwx root     root              1970-01-07 18:27 sdi -> /dev/block/mmcblk0p3
+#lrwxrwxrwx root     root              1970-01-07 18:27 splash -> /dev/block/mmcblk0p20
+#lrwxrwxrwx root     root              1970-01-07 18:27 ssd -> /dev/block/mmcblk0p19
+#lrwxrwxrwx root     root              1970-01-07 18:27 system -> /dev/block/mmcblk0p12
+#lrwxrwxrwx root     root              1970-01-07 18:27 tz -> /dev/block/mmcblk0p8
+#lrwxrwxrwx root     root              1970-01-07 18:27 usbmsc -> /dev/block/mmcblk0p21
+#lrwxrwxrwx root     root              1970-01-07 18:27 userdata -> /dev/block/mmcblk0p22

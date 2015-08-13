@@ -1,0 +1,222 @@
+# Copyright (c) 2012, The Linux Foundation. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimer in the documentation and/or other materials provided
+#       with the distribution.
+#     * Neither the name of The Linux Foundation nor the names of its
+#       contributors may be used to endorse or promote products derived
+#       from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#
+
+###T30:import init.qcom.spec.switch.rc
+
+on early-init
+    mkdir /firmware 0771 system system
+    symlink /data/tombstones /tombstones
+###T30:    #chmod 777 /setup_swap.sh
+#
+#on init
+#    export BOOTCLASSPATH ${BOOTCLASSPATH}:/system/framework/oem-services.jar:/system/framework/qcmediaplayer.jar
+#
+#on early-fs
+#    rm /storage/sdcard0
+#    mkdir /storage/sdcard0 0000 system system
+#    export EXTERNAL_STORAGE /storage/sdcard0
+#    export EMULATED_STORAGE_SOURCE
+#    export EMULATED_STORAGE_TARGET
+#
+#    rm /sdcard
+#    symlink /storage/sdcard0 /sdcard
+#    rm /mnt/sdcard
+#    symlink /storage/sdcard0 /mnt/sdcard
+###T30:
+
+on fs
+    mount_all fstab.qcom
+    # zRAM
+    swapon_all fstab.qcom
+
+    # Keeping following partitions outside fstab file. As user may not have
+    # these partition flashed on the device. Failure to mount any partition in fstab file
+    # results in failure to launch late-start class.
+
+    #wait /dev/block/platform/msm_sdcc.1/by-name/cache
+    #mount ext4 /dev/block/platform/msm_sdcc.1/by-name/cache /cache nosuid nodev barrier=1
+
+    wait /dev/block/platform/msm_sdcc.1/by-name/persist
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/persist /persist nosuid nodev barrier=1
+
+    wait /dev/block/platform/msm_sdcc.1/by-name/modem
+    mount vfat /dev/block/platform/msm_sdcc.1/by-name/modem /firmware ro shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0
+
+#T30#chown root root /system/bin/sskiller
+
+on boot
+    write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
+    write /sys/bus/i2c/drivers/ft5x06_ts/1-0038/update_fw 1
+    # Enable writing to brightness node under torch-light from userspace
+    chown system system /sys/class/leds/torch-light/brightness
+
+on post-fs-data
+    mkdir /data/tombstones 0771 system system
+    mkdir /tombstones/modem 0771 system system
+
+on boot
+    write /proc/sys/vm/page-cluster 0
+    write /proc/sys/vm/swappiness 100
+
+    #[ECID:000000] ZTEBSP wanghaifei 20130905 start, for sensor init
+    #chmod 664 /dev/light_sensor
+    #chown system root /dev/light_sensor
+
+    #chown system root /sys/class/i2c-adapter/i2c-0/0-0019/enable_device
+    #chown system root /sys/class/i2c-adapter/i2c-0/0-0019/pollrate_ms
+    #[ECID:000000] ZTEBSP wanghaifei 20130905 end, for sensor init
+
+    #//[ECID:0000]ZTE_BSP maxiaoping 20130821 modify leds&vibrator feature for 8x26,start.
+    #chown system system /sys/class/leds/lcd-backlight/brightness
+    #chown system system /sys/class/leds/button-backlight/brightness
+    #chown system system /sys/class/leds/red/brightness
+    #chown system system /sys/class/leds/green/brightness
+    #chown system system /sys/class/leds/red/blink
+    #chown system system /sys/class/leds/green/blink
+    #chown system system /sys/class/timed_output/vibrator/enable
+    #//[ECID:0000]ZTE_BSP maxiaoping 20130821 modify leds&vibrator feature for 8x26,end.
+
+    # vibrator intensity
+    #chown system system /sys/devices/virtual/timed_output/vibrator/vtg_level
+
+    # usb charging
+    chown system system /sys/class/power_supply/battery/charging_enabled
+
+    # display color calibration
+#   chown system system /sys/devices/virtual/graphics/fb0/kcal
+
+    # key disabler
+#    chown system system /proc/touchscreen/keypad_enable
+
+###T30:
+# Allow usb charging to be disabled persistently
+#on property:persist.usb.chgdisabled=1
+#    write /sys/class/power_supply/battery/charging_enabled 0
+#
+#on property:persist.usb.chgdisabled=0
+#    write /sys/class/power_supply/battery/charging_enabled 1
+#
+#on boot
+#    insmod /system/lib/modules/adsprpc.ko
+#
+#Start the qcom-system-daemon service
+#service qcomsysd /system/bin/qcom-system-daemon
+#   class main
+###T30:
+    
+service time_daemon /system/bin/time_daemon
+    class late_start
+    user root
+    group root
+
+service mpdecision /system/bin/mpdecision --avg_comp
+    user root
+    disabled
+
+# start GNSS/Sensor interface daemon
+service gsiff_daemon /system/bin/gsiff_daemon
+    class late_start
+    user system
+    group gps net_raw
+
+service thermal-engine /system/bin/thermal-engine
+    class main
+    user root
+    group root
+
+service qseecomd /system/bin/qseecomd
+    class late_start
+    user root
+    group root
+
+service qrngd /system/bin/qrngd -f
+    class main
+    user root
+    group root
+
+service qrngp /system/bin/qrngp
+    class main
+    user root
+    group root
+    oneshot
+    disabled
+
+on property:sys.boot_completed=1
+    start qrngp
+
+# start camera server as daemon
+service qcamerasvr /system/bin/mm-qcamera-daemon
+    class late_start
+    user camera
+    group camera system inet input graphics
+
+service audiod /system/bin/audiod
+   class late_start
+   user system
+   group system
+
+service adsprpcd /system/bin/adsprpcd
+    class main
+    user media
+    group media
+
+service wcnss-service /system/bin/wcnss_service
+   class late_start
+   user system
+   group system wifi
+   disabled
+   oneshot
+
+on property:wlan.driver.ath=0
+    start wcnss-service
+
+
+# Performance profiles
+# Powersave
+on property:sys.perf.profile=0
+    start mpdecision
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor powersave
+    write /sys/class/devfreq/fdc00000.qcom,kgsl-3d0/governor powersave
+    write /sys/class/devfreq/qcom,cpubw.44/governor powersave
+
+# Balanced
+on property:sys.perf.profile=1
+    start mpdecision
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ondemand
+    write /sys/class/devfreq/fdc00000.qcom,kgsl-3d0/governor msm-adreno-tz
+    write /sys/class/devfreq/qcom,cpubw.44/governor msm_cpufreq
+
+# High performance
+on property:sys.perf.profile=2
+    stop mpdecision
+    write /sys/devices/system/cpu/cpu0/online 1
+    write /sys/devices/system/cpu/cpu1/online 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
+    write /sys/class/devfreq/fdc00000.qcom,kgsl-3d0/governor performance
+    write /sys/class/devfreq/qcom,cpubw.44/governor performance
