@@ -7,7 +7,8 @@ $(call inherit-product, device/common/gps/gps_us_supl.mk)
 #$(call inherit-product, device/qcom/common/common.mk)
 ##test
 
-$(call inherit-product-if-exists, vendor/PHICOMM/msm8610/msm8610-vendor.mk)
+#$(call inherit-product-if-exists, vendor/PHICOMM/msm8610/msm8610-vendor.mk)
+#$(call inherit-product-if-exists, vendor/PHICOMM/msm8610/BoardConfigVendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/PHICOMM/msm8610/overlay
 
@@ -35,12 +36,12 @@ PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 #fstab.qcom & init.qcom.spec.switch.rc
-PRODUCT_PACKAGES += fstab.qcom
+#PRODUCT_PACKAGES += fstab.qcom
 
 # Ramdisk
 #root:
 PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(LOCAL_PATH/root,root)
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/root,root)
 
 # Prebuilt
 #system

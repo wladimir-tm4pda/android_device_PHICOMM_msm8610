@@ -1,0 +1,15 @@
+error when compiing with display 'caf-new'
+MSMFB_OVERLAY_PREPARE not declared.
+==========
+hardware/qcom/display-caf-new/liboverlay/mdpWrapper.h:180:43: error: 'mdp_overlay_list' has not been declared
+hardware/qcom/display-caf-new/liboverlay/mdpWrapper.h: In function 'bool overlay::mdp_wrapper::validateAndSet(const int&, int&)':
+hardware/qcom/display-caf-new/liboverlay/mdpWrapper.h:182:19: error: 'MSMFB_OVERLAY_PREPARE' was not declared in this scope
+make: *** [/home/wladimir_tm/cm-11.0/out/target/product/msm8610/obj/SHARED_LIBRARIES/libqdutils_intermediates/cb_utils.o] Error 1
+make: *** Waiting for unfinished jobs....
+
+=========
+
+update kernel sources to KonstaT??
+https://github.com/KonstaT/android_kernel_zte_msm8610/blob/ef1bfe9d3cd66b8f2a062327f2a58a8b8db3446c/include/linux/msm_mdp.h
+=========
+https://github.com/KonstaT/android_kernel_zte_msm8610

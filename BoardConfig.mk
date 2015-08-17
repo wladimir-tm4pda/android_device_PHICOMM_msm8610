@@ -40,12 +40,12 @@
 # This variable is set first, so it can be overridden
 # by BoardConfigVendor.mk
 USE_CAMERA_STUB := true
-BOARD_USES_GENERIC_AUDIO := true
+#BOARD_USES_GENERIC_AUDIO := true
 #BOARD_USES_GENERIC_AUDIO := false
 
 # inherit from the proprietary version
 #-include vendor/PHICOMM/C230w/BoardConfigVendor.mk
-#-include vendor/PHICOMM/msm8610/BoardConfigVendor.mk
+-include vendor/PHICOMM/msm8610/BoardConfigVendor.mk
 
 #-include vendor/zte/Aurora/BoardConfigVendor.mk
 #-include qcom/common/msm8610/BoardConfigVendor.mk
@@ -61,7 +61,7 @@ LOCAL_PATH := device/PHICOMM/msm8610
 #TARGET_SPECIFIC_HEADER_PATH += $(LOCAL_PATH)/include
 
 #working:
-#TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
+TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 # Platform
 #BOARD_VENDOR := PHICOMM
@@ -104,7 +104,7 @@ TARGET_ARCH_LOWMEM := true
 # Kernel
 #TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuitls/kernel
 #TARGET_PREBUILT_RECOVERY_KERNEL :=
-TARGET_KERNEL_SOURCE := device/PHICOMM/msm8610-kernel
+TARGET_KERNEL_SOURCE := kernel/PHICOMM/msm8610
 TARGET_KERNEL_CONFIG := C230W_defconfig
 #TARGET_KERNEL_CONFIG := msm8610-perf_defconfig
 #TARGET_KERNEL_CONFIG := msm8610_defconfig
@@ -249,17 +249,17 @@ MAX_EGL_CACHE_SIZE := 2048*1024
 #COMMON_GLOBAL_CFLAGS += -DLG_CAMERA_HARDWARE
 
 # Media
-#TARGET_QCOM_MEDIA_VARIANT := caf-new
+TARGET_QCOM_MEDIA_VARIANT := caf-new
 #TARGET_QCOM_MEDIA_VARIANT := caf-legacy
 # QCOM enhanced A/V
-#TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
+TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 
 # Audio
-#TARGET_QCOM_AUDIO_VARIANT := caf
-#BOARD_USES_ALSA_AUDIO := true
-#AUDIO_FEATURE_DISABLED_ANC_HEADSET := true
+TARGET_QCOM_AUDIO_VARIANT := caf
+BOARD_USES_ALSA_AUDIO := true
+AUDIO_FEATURE_DISABLED_ANC_HEADSET := true
 #AUDIO_FEATURE_DISABLED_SSR := true
-#AUDIO_FEATURE_DISABLED_DS1_DOLBY_DDP := true
+AUDIO_FEATURE_DISABLED_DS1_DOLBY_DDP := true
 #AUDIO_FEATURE_DISABLED_DS1_DOLBY_DAP := true
 #AUDIO_FEATURE_DISABLED_MULTI_VOICE_SESSIONS := true
 
@@ -416,3 +416,18 @@ TARGET_SCREEN_WIDTH := 480
 #ADDITIONAL_DEFAULT_PROPERTIES += persist.sys.usb.config=mass_storage,adb
 
 #BUILD_TINY_ANDROID := true
+
+# Scorpio92
+TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_storage/lun/file"
+BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
+
+# hroark13/android_device_zte_ada
+# Vold
+#BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
+#BOARD_VOLD_MAX_PARTITIONS := 24
+#TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/msm_hsusb/gadget/lun%d/file"
+#BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
+#TARGET_USE_CUSTOM_SECOND_LUN_NUM := 1
+#BOARD_USE_USB_MASS_STORAGE_SWITCH := true
+
+#BOARD_USES_RESOURCE_MANAGER := true #/system/core
