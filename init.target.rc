@@ -1,4 +1,4 @@
-# Copyright (c) 2012, The Linux Foundation. All rights reserved.
+# Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -27,13 +27,27 @@
 #
 #
 
+import init.qcom.spec.switch.rc
+
 on early-init
     mkdir /firmware 0771 system system
     symlink /data/tombstones /tombstones
-    write /sys/kernel/mm/ksm/pages_to_scan 100
-    write /sys/kernel/mm/ksm/sleep_millisecs 500
-    write /sys/kernel/mm/ksm/run 1
-    write /sys/block/zram0/disksize 192M
+    chmod 777 /setup_swap.sh
+
+on init
+    export BOOTCLASSPATH ${BOOTCLASSPATH}:/system/framework/oem-services.jar:/system/framework/qcmediaplayer.jar
+
+on early-fs
+    rm /storage/sdcard0
+    mkdir /storage/sdcard0 0000 system system
+    export EXTERNAL_STORAGE /storage/sdcard0
+    export EMULATED_STORAGE_SOURCE
+    export EMULATED_STORAGE_TARGET
+
+    rm /sdcard
+    symlink /storage/sdcard0 /sdcard
+    rm /mnt/sdcard
+    symlink /storage/sdcard0 /mnt/sdcard
 
 on fs
     mount_all fstab.qcom
@@ -50,13 +64,14 @@ on fs
 
     wait /dev/block/platform/msm_sdcc.1/by-name/modem
     mount vfat /dev/block/platform/msm_sdcc.1/by-name/modem /firmware ro shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
+#M
+    chown root root /system/bin/sskiller
 
 on boot
-   write /sys/bus/i2c/drivers/ft5x06_ts/1-0038/update_fw 1
-   write /proc/sys/vm/page-cluster 0
-   write /proc/sys/vm/swappiness 100
-   # Enable writing to brightness node under torch-light from userspace
-   chown system system /sys/class/leds/torch-light/brightness
+    write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
+    write /sys/bus/i2c/drivers/ft5x06_ts/1-0038/update_fw 1
+    # Enable writing to brightness node under torch-light from userspace
+    chown system system /sys/class/leds/torch-light/brightness
 
 on post-fs-data
     mkdir /data/tombstones 0771 system system
@@ -76,7 +91,6 @@ on property:persist.usb.chgdisabled=0
 on boot
     insmod /system/lib/modules/adsprpc.ko
 
-
 #Start the qcom-system-daemon service
 service qcomsysd /system/bin/qcom-system-daemon
    class main
@@ -86,15 +100,15 @@ service time_daemon /system/bin/time_daemon
    user root
    group root
 
-service mpdecision /system/bin/mpdecision --avg_comp
+service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
    user root
    disabled
 
 #start GNSS/Sensor interface daemon
 service gsiff_daemon /system/bin/gsiff_daemon
    class late_start
-   user system
-   group gps net_raw
+   user gps
+   group gps net_raw misc
 
 service thermal-engine /system/bin/thermal-engine
    class main
@@ -132,27 +146,32 @@ service audiod /system/bin/audiod
    user system
    group system
 
-service swapping /system/bin/sh /system/etc/enable_swap.sh
-    class core
-    user root
-    oneshot
-
 service adsprpcd /system/bin/adsprpcd
    class main
    user media
    group media
 
+
 service wcnss-service /system/bin/wcnss_service
-    class late_start
-    user system
-    group system wifi
-    oneshot
+   class late_start
+   user system
+   group system wifi
+   disabled
+   oneshot
 
-service ppd /system/bin/mm-pp-daemon
-    class late_start
-    user system
-    socket pps stream 0660 system system
-    group system graphics
+on property:wlan.driver.ath=0
+    start wcnss-service
 
-on property:init.svc.surfaceflinger=stopped
-    stop ppd
+	
+#wenyu
+service copy_apps /system/bin/sh /system/vendor/speccfg/copy_apps.sh
+   class late_start
+   user root
+   group root
+   one shot #M
+#M
+#run system_server killer,don't know why spawn so many process #
+service sskiller /system/bin/sskiller #
+     class core #
+     user root #
+     group root

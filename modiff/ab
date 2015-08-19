@@ -1,0 +1,33 @@
+hardware/qcom/display/liboverlay/overlayMdp.cpp: In member function 'void overlay::MdpCtrl::setColor(uint32_t)':
+hardware/qcom/display/liboverlay/overlayMdp.cpp:112:13: error: 'struct mdp_overlay' has no member named 'bg_color'
+make: *** [out/target/product/msm8610/obj/SHARED_LIBRARIES/liboverlay_intermediates/overlayMdp.o] Error 1
+make: *** Waiting for unfinished jobs....
+Command exited with non-zero status 2
+Total time: 36:31.35
+Wed Jul 29 17:26:11 EEST 2015
+
+--------------
+
+frameworks/base/core/res/res/values/public.xml:643: warning: No comment for public symbol android:style/Widget.TextView.SpinnerItem
+frameworks/base/core/res/res/values/public.xml:652: warning: No comment for public symbol android:style/Widget.WebView
+  CC [M]  ../vendor/qcom/opensource/wlan/prima/CORE/HDD/src/wlan_hdd_main.o
+/home/wladimir_tm/caf/kernel/../vendor/qcom/opensource/wlan/prima/CORE/HDD/src/wlan_hdd_main.c: In function 'hdd_wlan_startup':
+/home/wladimir_tm/caf/kernel/../vendor/qcom/opensource/wlan/prima/CORE/HDD/src/wlan_hdd_main.c:6328:4: error: implicit declaration of function 'wcnss_get_wlan_mac_address' [-Werror=implicit-function-declaration]
+cc1: some warnings being treated as errors
+make[3]: *** [../vendor/qcom/opensource/wlan/prima/CORE/HDD/src/wlan_hdd_main.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+
+...
+Command exited with non-zero status 2
+Total time: 11:23.10
+Wed Jul 29 17:43:52 EEST 2015
+
+--------------
+reless/ath6kl_usb.ko
+target Prebuilt: cfg80211.ko (out/target/product/msm8610/obj/DLKM/cfg80211.ko_intermediates/cfg80211.ko)
+acp: file 'out/target/product/msm8610/obj/external/compat-wireless/cfg80211.ko' does not exist
+make: *** [out/target/product/msm8610/obj/DLKM/cfg80211.ko_intermediates/cfg80211.ko] Error 1
+make: *** Waiting for unfinished jobs...
+
+--- simple!!!  forced compile with options -ik !!!
+-----

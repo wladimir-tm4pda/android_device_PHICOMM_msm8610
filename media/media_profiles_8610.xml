@@ -90,7 +90,7 @@
 <MediaSettings>
     <!-- Each camcorder profile defines a set of predefined configuration parameters -->
     <!-- Back Camera -->
-    <CamcorderProfiles cameraId="0" startOffsetMs="300">
+    <CamcorderProfiles cameraId="0" startOffsetMs="500">
 
     <EncoderProfile quality="low" fileFormat="3gp" duration="30">
       <Video codec="h264"
@@ -107,7 +107,7 @@
 
     <EncoderProfile quality="high" fileFormat="mp4" duration="30">
       <Video codec="h264"
-             bitRate="14000000"
+             bitRate="6000000"
              width="1280"
              height="720"
              frameRate="30" />
@@ -159,7 +159,7 @@
 
     <EncoderProfile quality="fwvga" fileFormat="3gp" duration="30">
       <Video codec="h264"
-             bitRate="2000000"
+             bitRate="3000000"
              width="864"
              height="480"
              frameRate="30" />
@@ -172,7 +172,7 @@
 
     <EncoderProfile quality="720p" fileFormat="mp4" duration="30">
       <Video codec="h264"
-             bitRate="14000000"
+             bitRate="6000000"
              width="1280"
              height="720"
              frameRate="30" />
@@ -238,7 +238,7 @@
 
     <EncoderProfile quality="timelapsehigh" fileFormat="mp4" duration="30">
       <Video codec="h264"
-             bitRate="14000000"
+             bitRate="6000000"
              width="1280"
              height="720"
              frameRate="30" />
@@ -322,7 +322,7 @@
 
     <EncoderProfile quality="timelapsefwvga" fileFormat="mp4" duration="30">
       <Video codec="h264"
-             bitRate="2000000"
+             bitRate="3000000"
              width="864"
              height="480"
              frameRate="30" />
@@ -351,7 +351,7 @@
 
     <EncoderProfile quality="timelapse720p" fileFormat="mp4" duration="30">
       <Video codec="h264"
-             bitRate="14000000"
+             bitRate="6000000"
              width="1280"
              height="720"
              frameRate="30" />
@@ -370,7 +370,7 @@
 
     </CamcorderProfiles>
     <!-- Front Camera -->
-    <CamcorderProfiles cameraId="1" startOffsetMs="300">
+    <CamcorderProfiles cameraId="1" startOffsetMs="500">
 
     <EncoderProfile quality="low" fileFormat="3gp" duration="30">
       <Video codec="h264"
@@ -387,7 +387,7 @@
 
     <EncoderProfile quality="high" fileFormat="mp4" duration="30">
       <Video codec="h264"
-             bitRate="14000000"
+             bitRate="6000000"
              width="1280"
              height="720"
              frameRate="30" />
@@ -439,7 +439,7 @@
 
      <EncoderProfile quality="fwvga" fileFormat="3gp" duration="30">
       <Video codec="h264"
-             bitRate="2000000"
+             bitRate="3000000"
              width="864"
              height="480"
              frameRate="30" />
@@ -452,7 +452,7 @@
 
     <EncoderProfile quality="720p" fileFormat="mp4" duration="30">
       <Video codec="h264"
-             bitRate="14000000"
+             bitRate="6000000"
              width="1280"
              height="720"
              frameRate="30" />
@@ -518,7 +518,7 @@
 
     <EncoderProfile quality="timelapsehigh" fileFormat="mp4" duration="30">
       <Video codec="h264"
-                   bitRate="8000000"
+                   bitRate="6000000"
                    width="1280"
                    height="720"
                    frameRate="30" />
@@ -602,7 +602,7 @@
 
     <EncoderProfile quality="timelapsefwvga" fileFormat="mp4" duration="30">
       <Video codec="h264"
-             bitRate="2000000"
+             bitRate="3000000"
              width="864"
              height="480"
              frameRate="30" />
@@ -630,7 +630,7 @@
 
     <EncoderProfile quality="timelapse720p" fileFormat="mp4" duration="30">
       <Video codec="h264"
-                   bitRate="8000000"
+                   bitRate="6000000"
                    width="1280"
                    height="720"
                    frameRate="30" />
@@ -738,15 +738,15 @@
         These values are for video encoder.
     -->
     <!--
-      Codec = h.264, Baseline profile, level 3.1
+      Codec = h.264, Baseline profile, level 4.1
     -->
-    <ExportVideoProfile name="h264" profile= "1" level="512"/>
+    <ExportVideoProfile name="h264" profile= "1" level="1"/>
     <!--
-      Codec = h.263, Baseline profile, level 70
+      Codec = h.263, Baseline profile, level 0
     -->
-    <ExportVideoProfile name="h263" profile= "1" level="128"/>
+    <ExportVideoProfile name="h263" profile= "1" level="1"/>
     <!--
       Codec = mpeg4, Simple profile, level 5
     -->
-    <ExportVideoProfile name="m4v" profile= "1" level="128"/>
+    <ExportVideoProfile name="m4v" profile= "1" level="1"/>
 </MediaSettings>
