@@ -47,3 +47,10 @@ PRODUCT_PACKAGES += fstab.qcom
 #    ln -sf /persist/WCNSS_qcom_wlan_nv.bin \
 #    $(TARGET_OUT_ETC)/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin)
 #endif
+
+DEFAULT_PROPERTY_OVERRIDES += \
+    ro.secure=0 \
+    ro.allow.mock.location=1 \
+    ro.debuggable=1 \
+    persist.service.adb.enable=1 \
+    persist.sys.usb.config=mtp,adb
